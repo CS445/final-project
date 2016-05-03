@@ -1,14 +1,15 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * File: Vector3.java
+ * Author: A. Haddox
+ * Class: CS 445 - Computer Graphics
+ *
+ * Assignment: Final Project
+ * Date Last Modified: 5/3/2016
+ *
+ * Purpose: This is a data container for 3 dimensional float vectors
  */
 package graphics;
 
-/**
- *
- * @author antzy_000
- */
 public class Vector3 {
     public float x, y, z;
     

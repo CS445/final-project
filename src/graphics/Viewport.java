@@ -1,30 +1,34 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * File: Viewport.java
+ * Author: A. Haddox
+ * Class: CS 445 - Computer Graphics
+ *
+ * Assignment: Final Project
+ * Date Last Modified: 5/3/2016
+ *
+ * Purpose: This class creates and initiates the GL window and camera.
  */
 package graphics;
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.GL11;
-
-import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.util.glu.GLU;
+import static org.lwjgl.opengl.GL11.*;
 
-/**
- *
- * @author antzy_000
- */
 public class Viewport {
-    private final int FRAMERATE = 60;
+    private CameraControl cc = new CameraControl(0, 0, 0);
+    private DisplayMode displayMode;
+    
+    /*
+     * Method: start
+     * Purpose: This method creates the viewport window and starts the main game loop
+     */
     public void start() {
         try
         {
             createWindow();
             initGL();
-            render();
+            cc.gameLoop();
         }
         catch(Exception e)
         {
@@ -32,51 +36,48 @@ public class Viewport {
         }
     }
     
+    /*
+     * Method: createWindow
+     * Purpose: This method sets the height and width of the viewport
+     (          by checking the available display modes
+     */
     private void createWindow() throws Exception {
         Display.setFullscreen(false);
-        Display.setDisplayMode(new DisplayMode(640, 480));
+        DisplayMode d[] = Display.getAvailableDisplayModes();
+        for(int i = 0; 9 < d.length; i++) {
+            if(d[i].getWidth() == 640 && d[i].getHeight() == 480
+                                      && d[i].getBitsPerPixel() == 32) {
+                displayMode = d[i];
+                break;
+            }
+        }
+        Display.setDisplayMode(displayMode);
         Display.setTitle("Final Project");
         Display.create();
     }
     
+    /*
+     * Method: initGL
+     * Purpose: This method sets the background color of the 3D space and creates
+                a perspective view.
+     */
     private void initGL() {
         glClearColor(0.0f, 0.70f, 0.95f, 0.0f); //Sky Blue-ish
         
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         
-        //glOrtho(0, 640, 0, 480, 1, -1);
-        GLU.gluPerspective(100.0f, 640/480, 0.1f, 300.0f); //Needs a rewrite. Check 3D Viewing pdf
+        GLU.gluPerspective(100, (float)displayMode.getWidth()/(float)displayMode.getHeight(), 0.1f, 300f);
         
         glMatrixMode(GL_MODELVIEW);
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     }
     
-    private void render() {
-        while(!Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-            try
-            {
-                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                glLoadIdentity();
-                
-                drawCube(2.0f, new Vector3(1, 1, -10)/*Vector3 rotation?*/);
-                
-                //handleInput();
-                
-                
-                Display.update();
-                Display.sync(FRAMERATE);
-            }
-            catch(Exception e)
-            {
-                
-            }
-        }
-        
-        Display.destroy();
-    }
-    
-    private void drawCube(float size, Vector3 position) throws Exception{
+    /*
+     * Method: drawCube
+     * Purpose: This method draws a cube according to a specified size and position.
+     */
+    public static void drawCube(float size, Vector3 position) throws Exception{
         glTranslatef(position.x, position.y, position.z);
         glBegin(GL_QUADS);
             //Top
@@ -86,32 +87,37 @@ public class Viewport {
             glVertex3f(-size, size, -size);
             glVertex3f(-size, size, size);
             glVertex3f(size, size, size);
-            
+
             //Bottom
+            glColor3f(1, 1, 1);
             glVertex3f(size, -size, size);
             glVertex3f(-size, -size, size);
             glVertex3f(-size, -size, -size);
             glVertex3f(size, size, -size);
             
             //Front
+            glColor3f(0, 0, 1);
             glVertex3f(size, size, size);
             glVertex3f(-size, size, size);
             glVertex3f(-size, -size, size);
             glVertex3f(size, -size, size);
             
             //Back
+            glColor3f(0, 1, 0);
             glVertex3f(size, -size, -size);
             glVertex3f(-size,-size,-size);
             glVertex3f(-size, size, -size);
             glVertex3f(size, size, -size);
             
             //Left
+            glColor3f(1, 0, 0);
             glVertex3f(-size, size, size);
             glVertex3f(-size, size, -size);
             glVertex3f(-size, -size, -size);
             glVertex3f(-size, -size, size);
             
             //Right
+            glColor3f(1, 0, 1);
             glVertex3f(size, size, -size);
             glVertex3f(size, size, size);
             glVertex3f(size, -size, size);
@@ -129,7 +135,6 @@ public class Viewport {
         
         //Bottom
         glBegin(GL_LINE_LOOP);
-            glColor3f(0, 0, 0);
             glVertex3f(size, -size, size);
             glVertex3f(-size, -size, size);
             glVertex3f(-size, -size, -size);
@@ -138,7 +143,6 @@ public class Viewport {
         
         //Front
         glBegin(GL_LINE_LOOP);
-            glColor3f(0, 0, 0);
             glVertex3f(size, size, size);
             glVertex3f(-size, size, size);
             glVertex3f(-size, -size, size);
@@ -147,7 +151,6 @@ public class Viewport {
         
         //Back
         glBegin(GL_LINE_LOOP);
-            glColor3f(0, 0, 0);
             glVertex3f(size, -size, -size);
             glVertex3f(-size,-size,-size);
             glVertex3f(-size, size, -size);
@@ -156,7 +159,6 @@ public class Viewport {
         
         //Left
         glBegin(GL_LINE_LOOP);
-            glColor3f(0, 0, 0);
             glVertex3f(-size, size, size);
             glVertex3f(-size, size, -size);
             glVertex3f(-size, -size, -size);
@@ -165,7 +167,6 @@ public class Viewport {
         
         //Right
         glBegin(GL_LINE_LOOP);
-            glColor3f(0, 0, 0);
             glVertex3f(size, size, -size);
             glVertex3f(size, size, size);
             glVertex3f(size, -size, size);
