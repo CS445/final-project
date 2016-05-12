@@ -71,6 +71,7 @@ public class Viewport {
         
         glMatrixMode(GL_MODELVIEW);
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+        glEnable(GL_DEPTH_TEST);
     }
     
     /*
@@ -82,7 +83,6 @@ public class Viewport {
         glBegin(GL_QUADS);
             //Top
             glColor3f(0, 0, 0);
-            
             glVertex3f(size, size, -size);
             glVertex3f(-size, size, -size);
             glVertex3f(-size, size, size);
@@ -93,7 +93,7 @@ public class Viewport {
             glVertex3f(size, -size, size);
             glVertex3f(-size, -size, size);
             glVertex3f(-size, -size, -size);
-            glVertex3f(size, size, -size);
+            glVertex3f(size, -size, -size);
             
             //Front
             glColor3f(0, 0, 1);
@@ -138,7 +138,7 @@ public class Viewport {
             glVertex3f(size, -size, size);
             glVertex3f(-size, -size, size);
             glVertex3f(-size, -size, -size);
-            glVertex3f(size, size, -size);
+            glVertex3f(size, -size, -size);
         glEnd();
         
         //Front
