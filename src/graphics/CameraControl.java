@@ -24,6 +24,7 @@ public class CameraControl {
     private float ylook = 0.0f;
     private float xlook = 0.0f;
     private Vector3 me;
+    private Chunk chunk = new Chunk(0, 0 , 0);
     
     public CameraControl (float x, float y, float z)
     {
@@ -173,7 +174,7 @@ public class CameraControl {
             camera.cameraPos();
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             
-            render();
+            chunk.render();
             
             Display.update();
             Display.sync(60);
@@ -189,7 +190,7 @@ public class CameraControl {
     private void render() {
         try
         {
-            Viewport.drawCube(2.0f, new Vector3(5, 0, 5)/*Vector3 rotation?*/);
+            Viewport.drawCube(2.0f, new Vector3(0, 0, -5)/*Vector3 rotation?*/);
         }
         catch(Exception e)
         {

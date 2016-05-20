@@ -4,7 +4,7 @@
  * Class: CS 445 - Computer Graphics
  *
  * Assignment: Final Project
- * Date Last Modified: 5/3/2016
+ * Date Last Modified: 5/20/2016
  *
  * Purpose: This class creates and initiates the GL window and camera.
  */
@@ -16,7 +16,7 @@ import org.lwjgl.util.glu.GLU;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Viewport {
-    private CameraControl cc = new CameraControl(0, 0, 0);
+    private CameraControl cc;
     private DisplayMode displayMode;
     
     /*
@@ -28,6 +28,7 @@ public class Viewport {
         {
             createWindow();
             initGL();
+            cc = new CameraControl(0, 0, 0);
             cc.gameLoop();
         }
         catch(Exception e)
@@ -71,7 +72,14 @@ public class Viewport {
         
         glMatrixMode(GL_MODELVIEW);
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+        
         glEnable(GL_DEPTH_TEST);
+        glEnable(GL_TEXTURE_2D);
+        
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_COLOR_ARRAY);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        
     }
     
     /*
