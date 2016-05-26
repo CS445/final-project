@@ -4,7 +4,7 @@
  * Class: CS 445 - Computer Graphics
  *
  * Assignment: Final Project
- * Date Last Modified: 5/3/2016
+ * Date Last Modified: 5/25/2016
  *
  * Purpose: This class defines the first person view camera for the application
  */

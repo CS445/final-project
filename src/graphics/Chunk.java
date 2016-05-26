@@ -4,7 +4,7 @@
  * Class: CS 445 - Computer Graphics
  *
  * Assignment: Final Project
- * Date Last Modified: 5/20/2016
+ * Date Last Modified: 5/26/2016
  *
  * Purpose: This class holds block information as an aggregate. This class also renders the chunks.
  */
@@ -64,10 +64,13 @@ public class Chunk {
     
     /*
      * Method: rebuildMesh
-     * Purpose: This method places junks according to simplex noise generation
+     * Purpose: This method places junks according to simplex noise generation.
      */
     public void rebuildMesh(float startX, float startY, float startZ) {
-        Random seed = new Random();
+        
+        long seedtime = System.currentTimeMillis();
+        Random seed = new Random(seedtime);
+
         SimplexNoise noise = new SimplexNoise(5, .1f, seed.nextInt());
         
         
@@ -82,10 +85,12 @@ public class Chunk {
         for(float x = 0; x < CHUNK_SIZE; x += 1) {
             for(float z = 0; z < CHUNK_SIZE; z += 1) {
                 for(float y = 0; y < MAX_HEIGHT; y++) {
-                    float i = startX + x *((10 - startX) / 12);
-                    float j = startY + z *((10 - startY) / 12);
-                    float k = startZ + z *((10 - startZ) / 12);
-                    int height = Math.abs((int)(startY + (int)(100 * noise.getNoise(i, j, k)) * CUBE_LENGTH));
+                    float i = startX + x *((CHUNK_SIZE - startX) / 640);
+                    float j = startY + z *((MAX_HEIGHT - startY) / 480);
+                    float k = startZ + z *((CHUNK_SIZE - startZ) / 640);
+                    
+                    double noiseVal = noise.getNoise(i, j, k);
+                    int height = Math.abs((int)(startY + (int)(100 * noiseVal) * CUBE_LENGTH));
                     
                     if(y <= height) {
                         VertexPositionData.put(createCube((float) (startX + x * CUBE_LENGTH), (float) (y * CUBE_LENGTH + (int)(CHUNK_SIZE * .8)), (float) (startZ + z * CUBE_LENGTH)));
@@ -443,70 +448,33 @@ public class Chunk {
                     else if(Blocks[x][y - 1][z].getBlockType() == Block.BlockType.Water) {
                         Blocks[x][y][z] = new Block(Block.BlockType.Water);
                     }
-                    else if (y == MAX_HEIGHT - 1) {
-                        if(Blocks[x][y - 1][z].getBlockType() == Block.BlockType.Dirt) {
-                            Blocks[x][y][z] = new Block(Block.BlockType.Grass);
+                    
+                    else if(y >=2 && y < 8) {
+                        if(y >= 6) {
+                            if(r.nextFloat() > .9f) {
+                                Blocks[x][y][z] = new Block(Block.BlockType.Water);
+                            }
+                            else if(r.nextFloat() > .3f) {
+                                Blocks[x][y][z] = new Block(Block.BlockType.Dirt);
+                            }
+                            else {
+                                Blocks[x][y][z] = new Block(Block.BlockType.Stone);
+                            }
                         }
-                        else {
-                            if(r.nextFloat() > 0.3f) {
-                            Blocks[x][y][z] = new Block(Block.BlockType.Dirt);
-                        }
-                        else {
-                            Blocks[x][y][z] = new Block(Block.BlockType.Sand);
-                        }
-                        }
-                    }
-                    else if(y >= 5) {
-                        if(r.nextFloat() > 0.3f) {
-                            Blocks[x][y][z] = new Block(Block.BlockType.Dirt);
-                        }
-                        else {
-                            Blocks[x][y][z] = new Block(Block.BlockType.Stone);
-                        }
-                    }
-                    else if(y > 3 && y < 5)
-                        if(r.nextFloat() > 0.66f) {
-                            Blocks[x][y][z] = new Block(Block.BlockType.Dirt);
-                        }
-                        else if(r.nextFloat() > 0.33f) {
-                            Blocks[x][y][z] = new Block(Block.BlockType.Stone);
-                        }
-                        else {
-                            Blocks[x][y][z] = new Block(Block.BlockType.Bedrock);
-                        }
-                    else
-                    {
-                        if(r.nextFloat() > 0.8f) {
-                            Blocks[x][y][z] = new Block(Block.BlockType.Water);
-                        }
-                        else {
-                            Blocks[x][y][z] = new Block(Block.BlockType.Sand);
-                        }
-                        /*else if(r.nextFloat() > 0.32f) {
+                        else if(r.nextFloat() > .3f) {
                             Blocks[x][y][z] = new Block(Block.BlockType.Dirt);
                         }
                         else {
                             Blocks[x][y][z] = new Block(Block.BlockType.Stone);
-                        }*/
+                        }
                     }
-                    /*else if(r.nextFloat() > 0.8f) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.Water);
-                    }
-                    else if(r.nextFloat() > 0.64f) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.Grass);
-                    }
-                    else if(r.nextFloat() > 0.48f) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.Sand);
-                    }
-                    else if(r.nextFloat() > 0.32f) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.Dirt);
-                    }
-                    else if(r.nextFloat() > .16f) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.Stone);
-                    }
+                    
                     else {
-                        Blocks[x][y][z] = new Block(Block.BlockType.Bedrock);
-                    }*/
+                        if(r.nextFloat() > .85f)
+                            Blocks[x][y][z] = new Block(Block.BlockType.Sand);
+                        else
+                            Blocks[x][y][z] = new Block(Block.BlockType.Grass);
+                    }
                 }
             }
         }

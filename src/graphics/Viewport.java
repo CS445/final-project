@@ -4,7 +4,7 @@
  * Class: CS 445 - Computer Graphics
  *
  * Assignment: Final Project
- * Date Last Modified: 5/20/2016
+ * Date Last Modified: 5/26/2016
  *
  * Purpose: This class creates and initiates the GL window and camera.
  */
@@ -87,7 +87,7 @@ public class Viewport {
         
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_TEXTURE_2D);
-        glEnable(GL_LIGHTING);
+        //glEnable(GL_LIGHTING);
         glEnable(GL_LIGHT0);
         
         glEnableClientState(GL_VERTEX_ARRAY);
