@@ -82,4 +82,8 @@ public class Block {
     public int getID() {
         return type.getID();
     }
+    
+    public BlockType getBlockType() {
+        return type;
+    }
 }

@@ -10,6 +10,9 @@
  */
 package graphics;
 
+import java.nio.FloatBuffer;
+
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.util.glu.GLU;
@@ -18,6 +21,9 @@ import static org.lwjgl.opengl.GL11.*;
 public class Viewport {
     private CameraControl cc;
     private DisplayMode displayMode;
+    
+    private FloatBuffer lightPosition;
+    private FloatBuffer whiteLight;
     
     /*
      * Method: start
@@ -73,13 +79,29 @@ public class Viewport {
         glMatrixMode(GL_MODELVIEW);
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
         
+        initLightArrays();
+        glLight(GL_LIGHT0, GL_POSITION, lightPosition);
+        glLight(GL_LIGHT0, GL_SPECULAR, whiteLight);
+        glLight(GL_LIGHT0, GL_DIFFUSE, whiteLight);
+        glLight(GL_LIGHT0, GL_AMBIENT, whiteLight);
+        
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_TEXTURE_2D);
+        glEnable(GL_LIGHTING);
+        glEnable(GL_LIGHT0);
         
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_COLOR_ARRAY);
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         
+    }
+    
+    private void initLightArrays() {
+        lightPosition = BufferUtils.createFloatBuffer(4);
+        lightPosition.put(0.0f).put(0.0f).put(0.0f).put(1.0f).flip();
+        
+        whiteLight = BufferUtils.createFloatBuffer(4);
+        whiteLight.put(1.0f).put(1.0f).put(1.0f).put(0.0f).flip();
     }
     
     /*
