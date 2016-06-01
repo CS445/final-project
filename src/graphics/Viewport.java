@@ -4,7 +4,7 @@
  * Class: CS 445 - Computer Graphics
  *
  * Assignment: Final Project
- * Date Last Modified: 5/26/2016
+ * Date Last Modified: 6/1/2016
  *
  * Purpose: This class creates and initiates the GL window and camera.
  */
@@ -96,6 +96,10 @@ public class Viewport {
         
     }
     
+    /*
+     * Method: initLightArrays
+     * Purpose: This method sets up the light buffers
+     */
     private void initLightArrays() {
         lightPosition = BufferUtils.createFloatBuffer(4);
         lightPosition.put(0.0f).put(0.0f).put(0.0f).put(1.0f).flip();

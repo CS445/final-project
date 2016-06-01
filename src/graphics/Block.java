@@ -4,7 +4,7 @@
  * Class: CS 445 - Computer Graphics
  *
  * Assignment: Final Project
- * Date Last Modified: 5/20/2016
+ * Date Last Modified: 6/1/2016
  *
  * Purpose: This class holds block information.
  */
@@ -83,6 +83,10 @@ public class Block {
         return type.getID();
     }
     
+    /*
+     * Method: getBlockType
+     * Purpose: This method returns the block type
+     */
     public BlockType getBlockType() {
         return type;
     }

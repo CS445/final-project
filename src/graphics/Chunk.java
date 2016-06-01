@@ -4,7 +4,7 @@
  * Class: CS 445 - Computer Graphics
  *
  * Assignment: Final Project
- * Date Last Modified: 5/26/2016
+ * Date Last Modified: 6/1/2016
  *
  * Purpose: This class holds block information as an aggregate. This class also renders the chunks.
  */
@@ -66,7 +66,7 @@ public class Chunk {
     
     /*
      * Method: rebuildMesh
-     * Purpose: This method places junks according to simplex noise generation.
+     * Purpose: This method places chunks according to simplex noise generation.
      */
     public void rebuildMesh(float startX, float startY, float startZ) {
         
@@ -515,14 +515,26 @@ public class Chunk {
         rebuildMesh(startX, startY, startZ);
     }
     
+    /*
+     * Method: getTexture
+     * Purpose: This method returns the texture field
+     */
     public Texture getTexture() {
         return texture;
     }
     
+    /*
+     * Method: setTexture
+     * Purpose: This method sets the texture field
+     */
     public void setTexture(String path, String ending) throws IOException{
         texture = TextureLoader.getTexture(ending, ResourceLoader.getResourceAsStream(path));
     }
     
+    /*
+     * Method: rebuildHandles
+     * Purpose: This method rebuilds the VBOs
+     */
     public void rebuildHandles() {
         VBOTextureHandle = glGenBuffers();
     }
