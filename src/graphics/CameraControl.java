@@ -4,7 +4,7 @@
  * Class: CS 445 - Computer Graphics
  *
  * Assignment: Final Project
- * Date Last Modified: 5/25/2016
+ * Date Last Modified: 6/1/2016
  *
  * Purpose: This class defines the first person view camera for the application
  */
@@ -65,7 +65,7 @@ public class CameraControl {
     {
         position.x -= dist * (float)Math.sin(Math.toRadians(ylook));
         position.z += dist * (float)Math.cos(Math.toRadians(ylook));
-        
+
         /*FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
         lightPosition.put(lPosition.x -= dist * (float)Math.sin(Math.toRadians(ylook))).put(lPosition.y).put(lPosition.z += dist * (float)Math.cos(Math.toRadians(ylook))).put(1.0f).flip();
         glLight(GL_LIGHT0, GL_POSITION, lightPosition);*/
@@ -150,7 +150,7 @@ public class CameraControl {
     /*
      * Method: gameLoop
      * Purpose: Handles user input to position the camera and renders objects in the
-                3D space
+                3D space. Also allows the user to redraw the chunks by pressing F1
      */
     public void gameLoop() {
         CameraControl camera = new CameraControl(0, 0, 0);

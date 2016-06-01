@@ -532,6 +532,14 @@ public class Chunk {
     }
     
     /*
+     * Method: getBlocks
+     * Purpose: This method returns the Blocks field
+     */
+    public Block[][][] getBlocks() {
+        return Blocks;
+    }
+    
+    /*
      * Method: rebuildHandles
      * Purpose: This method rebuilds the VBOs
      */
