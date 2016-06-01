@@ -66,9 +66,9 @@ public class CameraControl {
         position.x -= dist * (float)Math.sin(Math.toRadians(ylook));
         position.z += dist * (float)Math.cos(Math.toRadians(ylook));
 
-        /*FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
+        FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
         lightPosition.put(lPosition.x -= dist * (float)Math.sin(Math.toRadians(ylook))).put(lPosition.y).put(lPosition.z += dist * (float)Math.cos(Math.toRadians(ylook))).put(1.0f).flip();
-        glLight(GL_LIGHT0, GL_POSITION, lightPosition);*/
+        glLight(GL_LIGHT0, GL_POSITION, lightPosition);
     }
     
     /*
@@ -80,9 +80,9 @@ public class CameraControl {
         position.x += dist * (float)Math.sin(Math.toRadians(ylook));
         position.z -= dist * (float)Math.cos(Math.toRadians(ylook));
         
-        /*FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
+        FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
         lightPosition.put(lPosition.x -= dist * (float)Math.sin(Math.toRadians(ylook))).put(lPosition.y).put(lPosition.z += dist * (float)Math.cos(Math.toRadians(ylook))).put(1.0f).flip();
-        glLight(GL_LIGHT0, GL_POSITION, lightPosition);*/
+        glLight(GL_LIGHT0, GL_POSITION, lightPosition);
     }
     
     /*
@@ -94,9 +94,9 @@ public class CameraControl {
         position.x -= dist * (float)Math.sin(Math.toRadians(ylook-90));
         position.z += dist * (float)Math.cos(Math.toRadians(ylook-90));
         
-        /*FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
+        FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
         lightPosition.put(lPosition.x -= dist * (float)Math.sin(Math.toRadians(ylook - 90))).put(lPosition.y).put(lPosition.z += dist * (float)Math.cos(Math.toRadians(ylook - 90))).put(1.0f).flip();
-        glLight(GL_LIGHT0, GL_POSITION, lightPosition);*/
+        glLight(GL_LIGHT0, GL_POSITION, lightPosition);
     }
     
     /*
@@ -108,9 +108,9 @@ public class CameraControl {
         position.x -= dist * (float)Math.sin(Math.toRadians(ylook+90));
         position.z += dist * (float)Math.cos(Math.toRadians(ylook+90));
         
-        /*FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
+        FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
         lightPosition.put(lPosition.x -= dist * (float)Math.sin(Math.toRadians(ylook + 90))).put(lPosition.y).put(lPosition.z += dist * (float)Math.cos(Math.toRadians(ylook + 90))).put(1.0f).flip();
-        glLight(GL_LIGHT0, GL_POSITION, lightPosition);*/
+        glLight(GL_LIGHT0, GL_POSITION, lightPosition);
     }
     
     /*

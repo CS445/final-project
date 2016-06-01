@@ -87,7 +87,7 @@ public class Viewport {
         
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_TEXTURE_2D);
-        //glEnable(GL_LIGHTING);
+        glEnable(GL_LIGHTING);
         glEnable(GL_LIGHT0);
         
         glEnableClientState(GL_VERTEX_ARRAY);
