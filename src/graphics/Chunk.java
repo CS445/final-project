@@ -11,6 +11,7 @@
 
 package graphics;
 
+import java.io.IOException;
 import util.SimplexNoise;
 
 import java.nio.FloatBuffer;
@@ -29,6 +30,7 @@ public class Chunk {
     static final int CHUNK_SIZE = 30;
     static final int CUBE_LENGTH = 2;
     static final int MAX_HEIGHT = 10;
+    static final int WATER_HEIGHT = 4;
     
     private Block[][][] Blocks;
     
@@ -96,8 +98,26 @@ public class Chunk {
                         VertexPositionData.put(createCube((float) (startX + x * CUBE_LENGTH), (float) (y * CUBE_LENGTH + (int)(CHUNK_SIZE * .8)), (float) (startZ + z * CUBE_LENGTH)));
                         VertexColorData.put(createCubeVertexCol(getCubeColor(Blocks[(int) x][(int) y][(int) z])));
                         VertexTextureData.put(createTexCube((float) 0, (float) 0, Blocks[(int)(x)][(int)(y)][(int)(z)]));
+                        Blocks[(int)(x)][(int)(y)][(int)(z)].setActive((true));
                     }
                     
+                }
+            }
+        }
+        
+        for(float x = 0; x < CHUNK_SIZE; x += 1) {
+            for(float z = 0; z < CHUNK_SIZE; z += 1) {
+                for(float y = 0; y < MAX_HEIGHT; y++) {
+
+                    if(y < WATER_HEIGHT) {
+                        if(!Blocks[(int)(x)][(int)(y)][(int)(z)].isActive()) {
+                            Blocks[(int)(x)][(int)(y)][(int)(z)] = new Block(Block.BlockType.Water);
+                            VertexPositionData.put(createCube((float) (startX + x * CUBE_LENGTH), (float) (y * CUBE_LENGTH + (int)(CHUNK_SIZE * .8)), (float) (startZ + z * CUBE_LENGTH)));
+                            VertexColorData.put(createCubeVertexCol(getCubeColor(Blocks[(int) x][(int) y][(int) z])));
+                            VertexTextureData.put(createTexCube((float) 0, (float) 0, Blocks[(int)(x)][(int)(y)][(int)(z)]));
+                            Blocks[(int)(x)][(int)(y)][(int)(z)].setActive((true));
+                        }
+                    }
                 }
             }
         }
@@ -429,7 +449,8 @@ public class Chunk {
     public Chunk(int startX, int startY, int startZ) {
         try
         {
-            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("textures/terrain.png"));
+            //texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("textures/terrain.png"));
+            texture = TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream("textures/tex2.jpg"));
         }
         catch(Exception e)
         {
@@ -449,12 +470,16 @@ public class Chunk {
                         Blocks[x][y][z] = new Block(Block.BlockType.Water);
                     }
                     
+                    else if(y > 3 && y % 2 == 0) {
+                        if(r.nextFloat() > .85f)
+                            Blocks[x][y][z] = new Block(Block.BlockType.Sand);
+                        else
+                            Blocks[x][y][z] = new Block(Block.BlockType.Grass);
+                    }
+                    
                     else if(y >=2 && y < 8) {
                         if(y >= 6) {
-                            if(r.nextFloat() > .9f) {
-                                Blocks[x][y][z] = new Block(Block.BlockType.Water);
-                            }
-                            else if(r.nextFloat() > .3f) {
+                            if(r.nextFloat() > .3f) {
                                 Blocks[x][y][z] = new Block(Block.BlockType.Dirt);
                             }
                             else {
@@ -488,5 +513,17 @@ public class Chunk {
         StartZ = startZ;
         
         rebuildMesh(startX, startY, startZ);
+    }
+    
+    public Texture getTexture() {
+        return texture;
+    }
+    
+    public void setTexture(String path, String ending) throws IOException{
+        texture = TextureLoader.getTexture(ending, ResourceLoader.getResourceAsStream(path));
+    }
+    
+    public void rebuildHandles() {
+        VBOTextureHandle = glGenBuffers();
     }
 }

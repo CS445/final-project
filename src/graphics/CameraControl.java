@@ -10,6 +10,7 @@
  */
 package graphics;
 
+import java.io.IOException;
 import java.nio.FloatBuffer;
 
 import org.lwjgl.BufferUtils;
@@ -192,6 +193,25 @@ public class CameraControl {
             if(Keyboard.isKeyDown(Keyboard.KEY_E)) {
                 camera.dropDown(movementSpeed);
             }
+            if(Keyboard.isKeyDown(Keyboard.KEY_F5)){
+                chunk = new Chunk(0, 0, 0);
+            }
+            try
+            {
+                if(Keyboard.isKeyDown(Keyboard.KEY_F2)){
+                    chunk.setTexture("textures/tex2.jpg", "JPG");
+                    //chunk.rebuildHandles();
+                }
+                if(Keyboard.isKeyDown(Keyboard.KEY_F3)){
+                    chunk.setTexture("textures/terrain.png", "PNG");
+                    //chunk.rebuildHandles();
+                }
+            }
+            catch(IOException e)
+            {
+                
+            }
+            
             
             glLoadIdentity();
             camera.cameraPos();

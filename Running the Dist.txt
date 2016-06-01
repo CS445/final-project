@@ -1,0 +1,5 @@
+java -Djava.library.path="C:\Users\antzy_000\Documents\Cal Poly Pomona\Spring 2016\CS 445\lwjgl-2.9.2\lwjgl-2.9.2\native\windows" -jar "C:\Users\antzy_000\Documents\Cal Poly Pomona\Spring 2016\CS 445\final-project\dist\final-project.jar"
+
+USE BELOW ON PRESENTATION DAY
+Include lwjgl folders and textures folder in the dist folder. Then copy and paste the following into .cmd after cd to dist dir
+java -Djava.library.path=.\lwjgl-2.9.2\lwjgl-2.9.2\native\windows -jar final-project.jar
